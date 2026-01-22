@@ -1,0 +1,66 @@
+# Environment
+.env
+.env.local
+.env.*.local
+
+# CSV data files
+*.csv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude Code
+.claude/
+
+# JSON files
+*.json
+
+# Private import script (available on request)
+3-load/wizi_import_fasttry.py
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Image conversion temp
+2-transform/convert_img/input/*
+2-transform/convert_img/output/*
+!2-transform/convert_img/input/.gitkeep
+!2-transform/convert_img/output/.gitkeep

@@ -1,0 +1,114 @@
+
+
+Get Category list [BETA]
+
+
+GET - /v3/shops/:shopId/categories
+
+
+ce que va donner cette appel d'api (les données sont pour l'exemple)
+
+
+
+
+{
+    "page": 1,
+    "limit": 50,
+    "pages": 1,
+    "total": 3,
+    "results": [
+        {
+            "id": 9,
+            "name": "E-Liquide",
+            "url": "e-liquide",
+            "menu_title": "E-Liquide",
+            "visible": true,
+            "meta": {
+                "title": "E-Liquides Variés - Tabac, Fruités & CBD chez Vapotime",
+                "description": "Découvrez des e-liquides saveur tabac, fruités, ou gourmands, avec CBD ou prêts à booster. Qualité garantie avec des marques reconnues chez Vapotime."
+            },
+            "children": [
+                {
+                    "id": 10,
+                    "name": "LES TABACS",
+                    "url": "les-tabacs",
+                    "menu_title": "LES TABACS",
+                    "visible": true,
+                    "meta": {
+                        "title": "E-Liquides Saveur Tabac - Transition Sans Tabac chez Vapotime",
+                        "description": "Découvrez des e-liquides tabac pour un sevrage progressif. Variétés classiques et riches, avec des marques de qualité chez Vapotime."
+                    },
+                    "children": []
+                },
+                {
+                    "id": 11,
+                    "name": "LES TABACS > Aromatisés",
+                    "url": "les-tabacs-aromatises",
+                    "menu_title": "LES TABACS > Aromatisés",
+                    "visible": false,
+                    "meta": {
+                        "title": null,
+                        "description": null
+                    },
+                    "children": []
+                },
+                {
+                    "id": 12,
+                    "name": "LES TABACS > Corsés",
+                    "url": "les-tabacs-corses",
+                    "menu_title": "LES TABACS > Corsés",
+                    "visible": false,
+                    "meta": {
+                        "title": null,
+                        "description": null
+                    },
+                    "children": []
+                },
+                {
+                    "id": 13,
+                    "name": "LES TABACS > Classics",
+                    "url": "les-tabacs-classics",
+                    "menu_title": "LES TABACS > Classics",
+                    "visible": false,
+                    "meta": {
+                        "title": null,
+                        "description": null
+                    },
+                    "children": []
+                },
+                {
+                    "id": 14,
+                    "name": "LES MENTHES",
+                    "url": "les-menthols",
+                    "menu_title": "LES MENTHES",
+                    "visible": true,
+                    "meta": {
+                        "title": "E-Liquide - LES MENTHES - VAPOTIME",
+                        "description": "Les produits de la catégorie LES MENTHES sur la boutique en ligne VAPOTIME"
+                    },
+                    "children": []
+                },
+                {
+                    "id": 15,
+                    "name": "LES FRUITES",
+                    "url": "les-fruites",
+                    "menu_title": "LES FRUITES",
+                    "visible": true,
+                    "meta": {
+                        "title": "E-Liquides Fruités - Saveurs Légères et Exotiques",
+                        "description": "Dégustez des e-liquides fruités aux arômes frais et exotiques. Marque de qualité disponible chez Vapotime pour un vapotage rafraîchissant."
+                    },
+                    "children": []
+                },
+                {
+                    "id": 28,
+                    "name": "LES FRUITES FRAIS",
+                    "url": "les-fruites-frais",
+                    "menu_title": "LES FRUITES FRAIS",
+                    "visible": true,
+                    "meta": {
+                        "title": null,
+                        "description": null
+                    },
+                    "children": []
+                },

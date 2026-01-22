@@ -1,0 +1,65 @@
+LOGIQUE DE GESTION DES PRIX POUR LES DÉCLINAISONS WIZISHOP
+===========================================================
+
+📋 RÈGLES GÉNÉRALES :
+---------------------
+1. Le produit PARENT garde son prix normal (ex: Plateau 24€)
+2. Les déclinaisons (produits enfants) ont leur prix propre
+3. Le prix final = Prix parent + Prix de chaque déclinaison sélectionnée
+
+🎯 LOGIQUE DES DÉCLINAISONS :
+-----------------------------
+• Si colonne prix VIDE → price_tax_excluded = 0€ (pas de supplément)
+• Si colonne prix REMPLIE → price_tax_excluded = prix indiqué (supplément)
+
+📝 EXEMPLE CONCRET :
+-------------------
+Plateau de fromages : 24€ (prix parent)
+
+Attribut "Nombre de baguettes" :
+- 0 Baguette (colonne vide) → 0€
+- 1 Baguette (colonne = 2€) → 2€  
+- 2 Baguettes (colonne = 4€) → 4€
+
+Attribut "Nombre de personnes" :
+- 2 personnes (colonne vide) → 0€
+- 4 personnes (colonne = 5€) → 5€
+- 6 personnes (colonne = 10€) → 10€
+
+💰 CALCUL PRIX FINAL :
+----------------------
+Client sélectionne "Plateau + 1 baguette + 4 personnes" :
+Prix final = 24€ (parent) + 2€ (1 baguette) + 5€ (4 personnes) = 31€
+
+⚠️ ERREURS À ÉVITER :
+---------------------
+❌ NE PAS mettre le prix parent dans les déclinaisons vides
+❌ NE PAS utiliser price_impact (n'existe pas dans l'API Wizi)
+❌ NE PAS additionner les prix dans le calcul
+
+✅ FORMAT API WIZISHOP :
+------------------------
+Produit parent :
+{
+  "price_tax_excluded": 24.00,  // Prix du produit de base
+  "quantity": null,             // Pas de stock (géré par déclinaisons)
+  "type": "declinations"
+}
+
+Déclinaisons :
+{
+  "value": "1 Baguette",
+  "price_tax_excluded": 2.00,   // Prix absolu de cette option
+  "quantity": 100               // Stock de cette déclinaison
+}
+
+📊 STRUCTURE CSV ATTENDUE :
+---------------------------
+Nom du produit | Prix TTC | Attribut 1 Nom | Attribut 1 Prix 1 | Attribut 1 Prix 2
+Plateau        | 24€      | Baguettes       | (vide)            | 2€
+                                            ↓                  ↓
+                                           0€                 2€
+
+🎯 RÉSUMÉ EN 1 PHRASE :
+-----------------------
+Colonne vide = 0€, colonne remplie = prix indiqué, le tout en prix absolus.

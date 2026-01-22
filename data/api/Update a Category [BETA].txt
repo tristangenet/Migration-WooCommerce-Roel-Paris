@@ -1,0 +1,40 @@
+Update a Category [BETA]
+
+PUT - https://api.wizishop.com/v3/shops/:shopId/categories/:categoryId
+
+JSON attendu a respecté au caractère pret sauf les variables bien sur. 
+
+{
+    "id_parent": 0,
+    "name": "Category",
+    "url": "category",
+    "menu_title": "Menu title",
+    "visible": true,
+    "meta": {
+        "title": "title",
+        "description": "meta description"
+    }
+}
+
+
+
+
+
+Paramètres dispo : 
+
+Parameter
+Field	Type	Description
+id_parent	Integer	
+The id parent category, 0 if it's a parent category
+
+name	String	
+The category Name
+
+url	String	
+The url category
+
+menu_title	String	
+The title's menu
+
+visible	Boolean	
+Set visibility

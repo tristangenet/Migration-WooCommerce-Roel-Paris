@@ -1,0 +1,132 @@
+
+Create a Product [BETA]
+
+POST - https://api.wizishop.com/v3/shops/:shopId/products
+
+
+Ce que Wizishop attend pour la création d'un produit. Il faut respecter la syntaxe exacte sinon ça ne marche pas. 
+
+
+
+
+{
+    "id": 12345,
+    "category_id": 78,
+    "other_categories_id": [],
+    "sku": "SKU",
+    "name": "Name",
+    "description": "<p>...</p>",
+    "short_description": "...",
+    "brand": "Brand",
+    "ean13": "",
+    "isbn": "",
+    "supplier": null,
+    "supplier_reference": null,
+    "tags": [
+        "tag1",
+        "tag2"
+    ],
+    "features": {},
+    "tax": 20,
+    "weight": 0,
+    "quantity": null,
+    "price_tax_excluded": 0,
+    "wholesale_price_tax_excluded": 0,
+    "reduction": 0,
+    "reduction_type": "percentage",
+    "reduction_from": null,
+    "reduction_to": null,
+    "images": [
+        "https://www.wizishop.fr/images/common/logo-wizishop.png"
+    ],
+    "visible": true,
+    "url": "prod-1",
+    "attributes": [
+        {
+            "name": "Color",
+            "options": [
+                {
+                    "value": "Blue",
+                    "sku": "sku-color-blue",
+                    "ean13": "",
+                    "weight": 12,
+                    "quantity": 42,
+                    "price_tax_excluded": 12,
+                    "reduction": 0,
+                    "reduction_type": "pourc",
+                    "image": "https://www.wizishop.fr/images/common/logo-wizishop.png",
+                    "active": true,
+                    "default": true
+                }
+            ]
+        }
+    ],
+    "cross_selling_products_id": {},
+    "meta": {
+        "title": "Title",
+        "description": "..."
+    },
+    "customizations": [
+        {
+            "title": "Free",
+            "price_tax_excluded": 0,
+            "mandatory": true,
+            "custom": {
+                "length": 50
+            }
+        },
+        {
+            "title": "Choices",
+            "price_tax_excluded": 0,
+            "mandatory": true,
+            "choice": {
+                "values": [
+                    "Choice1",
+                    "Choice2"
+                ]
+            }
+        },
+        {
+            "title": "File",
+            "price_tax_excluded": 0,
+            "mandatory": true,
+            "file": {
+                "name": "",
+                "values": [
+                    "JPG",
+                    "PDF"
+                ]
+            }
+        },
+        {
+            "title": "Date",
+            "price_tax_excluded": 0,
+            "mandatory": true,
+            "date": {}
+        }
+    ],
+    "ecotax": 0,
+    "digital_product": false,
+    "digital_product_link": null,
+    "type": "standard",
+    "affiliate_url": null,
+    "specific_shipping_enabled": [],
+    "generic_shipping_disabled": [],
+    "product_price_discount_config": {
+        "product_price_discount_list": [
+            {
+                "quantity": 5,
+                "discount": 20
+            },
+            {
+                "quantity": 8,
+                "discount": 30
+            },
+            {
+                "quantity": 10,
+                "discount": 40
+            }
+        ],
+        "type_discount": "pourc"
+    }
+}
