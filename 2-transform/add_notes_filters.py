@@ -9,6 +9,8 @@ import csv
 import re
 import sys
 import io
+import argparse
+from pathlib import Path
 
 # Encodage UTF-8 pour Windows
 if sys.platform == 'win32':
@@ -22,8 +24,18 @@ LOAD_INPUT = os.path.join(ROOT_DIR, "3-load", "input")
 
 FILTRES_WIZI_CSV = os.path.join(LOAD_INPUT, 'filtres_wizishop.csv')
 EXPORT_WOOCOMMERCE = os.path.join(ROOT_DIR, 'export_webtoffe_woocommerce.csv')  # CSV source à la racine
-CSV_CONVERTI = os.path.join(LOAD_INPUT, 'woocommerce_converted_2025-12-02_19-49-19.csv')
 CSV_OUTPUT = os.path.join(LOAD_INPUT, 'woocommerce_converted_with_filters.csv')
+
+
+def find_latest_converted_csv(load_input_dir):
+    """Trouve le fichier woocommerce_converted_*.csv le plus récent."""
+    candidates = [
+        p for p in Path(load_input_dir).glob('woocommerce_converted_*.csv')
+        if p.name != 'woocommerce_converted_with_filters.csv'
+    ]
+    if not candidates:
+        return None
+    return str(max(candidates, key=lambda p: p.stat().st_mtime))
 
 
 def load_wizi_filters(filepath):
@@ -161,26 +173,57 @@ def classify_notes(notes_list, wizi_filters, notes_structure, product_name):
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description="Ajoute les colonnes de notes olfactives au CSV converti"
+    )
+    parser.add_argument(
+        '--input',
+        help='CSV converti en entrée (par défaut: dernier woocommerce_converted_*.csv)'
+    )
+    parser.add_argument(
+        '--output',
+        default=CSV_OUTPUT,
+        help='CSV de sortie enrichi (défaut: 3-load/input/woocommerce_converted_with_filters.csv)'
+    )
+    parser.add_argument(
+        '--filters',
+        default=FILTRES_WIZI_CSV,
+        help='CSV des filtres WiziShop (défaut: 3-load/input/filtres_wizishop.csv)'
+    )
+    parser.add_argument(
+        '--source',
+        default=EXPORT_WOOCOMMERCE,
+        help='CSV source WooCommerce original (défaut: export_webtoffe_woocommerce.csv)'
+    )
+    args = parser.parse_args()
+
+    csv_input = args.input or find_latest_converted_csv(LOAD_INPUT)
+    if not csv_input:
+        print("❌ Aucun CSV converti trouvé. Passez --input pour spécifier un fichier.")
+        sys.exit(1)
+
     print("=" * 60)
     print("AJOUT DES COLONNES NOTES OLFACTIVES")
     print("=" * 60)
+    print(f"CSV entrée  : {csv_input}")
+    print(f"CSV sortie  : {args.output}")
 
     # Charger les filtres WiziShop
     print("\n1. Chargement des filtres WiziShop...")
-    wizi_filters = load_wizi_filters(FILTRES_WIZI_CSV)
+    wizi_filters = load_wizi_filters(args.filters)
     print(f"   Tete: {len(wizi_filters['tete'])} valeurs")
     print(f"   Coeur: {len(wizi_filters['coeur'])} valeurs")
     print(f"   Fond: {len(wizi_filters['fond'])} valeurs")
 
     # Charger la structure des notes depuis WooCommerce
     print("\n2. Chargement structure notes WooCommerce...")
-    notes_structure = load_woocommerce_notes_structure(EXPORT_WOOCOMMERCE)
+    notes_structure = load_woocommerce_notes_structure(args.source)
     print(f"   {len(notes_structure)} produits avec structure Tete/Coeur/Fond")
 
     # Lire le CSV converti
     print("\n3. Lecture du CSV converti...")
     rows = []
-    with open(CSV_CONVERTI, 'r', encoding='utf-8-sig') as f:
+    with open(csv_input, 'r', encoding='utf-8-sig') as f:
         reader = csv.DictReader(f)
         fieldnames = reader.fieldnames
         for row in reader:
@@ -240,11 +283,15 @@ def main():
 
     # Écrire le CSV de sortie
     print("\n5. Ecriture du CSV de sortie...")
-    with open(CSV_OUTPUT, 'w', encoding='utf-8-sig', newline='') as f:
+    output_dir = os.path.dirname(args.output)
+    if output_dir:
+        os.makedirs(output_dir, exist_ok=True)
+
+    with open(args.output, 'w', encoding='utf-8-sig', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
-    print(f"   Fichier cree: {CSV_OUTPUT}")
+    print(f"   Fichier cree: {args.output}")
 
     # Afficher les stats
     print("\n" + "=" * 60)

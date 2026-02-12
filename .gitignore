@@ -50,6 +50,7 @@ Thumbs.db
 
 # JSON files
 *.json
+!vercel.json
 
 # Private import script (available on request)
 3-load/wizi_import_fasttry.py

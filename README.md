@@ -111,6 +111,30 @@ cd ../3-load
 python wizi_import_fasttry.py
 ```
 
+
+### Interface web (sans CLI)
+
+```bash
+python web/app.py
+```
+
+(Serveur web Python standard library, sans dépendance externe.)
+
+Puis ouvrez `http://localhost:5000` pour :
+- uploader un CSV WooCommerce,
+- lancer **Extract + Transform** automatiquement,
+- récupérer les fichiers générés dans `3-load/input/`.
+
+### Déploiement Vercel
+
+Le repo est maintenant compatible Vercel via `api/index.py` + `vercel.json`.
+
+- Route principale servie par la fonction serverless Python
+- Upload CSV via formulaire web
+- Exécution Extract + Transform côté fonction
+
+> ⚠️ Limites Vercel : stockage éphémère (`/tmp`) et timeout de fonction. Pour des gros imports, privilégiez l'exécution locale.
+
 ### Options d'import
 
 ```bash
@@ -156,6 +180,13 @@ Exemple de log produit :
   "_wizi_product_id": 12345
 }
 ```
+
+
+## Visuel du pipeline
+
+Pour une vue graphique rapide du projet (sans parcourir tout le code), consultez :
+
+- [Visuel du projet](data/doc/VISUEL_PROJET.md)
 
 ## Documentation
 
